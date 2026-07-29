@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Fraunces", serif;
+  --font-body: "Karla", sans-serif;
+
+  --color-ink: #241E2B;
+  --color-ink-soft: #5B5265;
+  --color-ink-faint: #8C8394;
+  --color-bloom: #B94A6E;
+  --color-bloom-soft: #E7C3D0;
+  --color-petal: #F7EDF0;
+  --color-brass: #B08D3F;
+  --color-sage: #7E9384;
+  --color-mist: #EFEBF2;
+  --color-paper: #FFFDFC;
+  --color-line: #E3DCE6;
+  --color-primary: #9a3256;
+  --color-tertiary: #495c4f;
+  --color-tertiary-fixed: #d2e8d7;
+  --color-tertiary-fixed-dim: #b6ccbb;
+  --color-secondary-fixed: #ffdf9f;
+  --color-secondary: #775a0e;
+}
+
+@layer utilities {
+  .font-headline-lg {
+    font-family: "Fraunces", serif;
+    font-size: 52px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+  .font-headline-md {
+    font-family: "Fraunces", serif;
+    font-size: 29px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  .font-headline-sm {
+    font-family: "Fraunces", serif;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+  .font-ui-header {
+    font-family: "Fraunces", serif;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 600;
+  }
+  .font-eyebrow {
+    font-family: "Karla", sans-serif;
+    font-size: 10.5px;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    font-weight: 700;
+  }
+  .font-meta-label {
+    font-family: "Karla", sans-serif;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    font-weight: 400;
+  }
+  .font-ui-nav {
+    font-family: "Karla", sans-serif;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 400;
+  }
+  .font-tiny {
+    font-family: "Karla", sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+  .font-lede {
+    font-family: "Karla", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.6;
+    font-weight: 400;
+  }
+  .font-body {
+    font-family: "Karla", sans-serif;
+    font-size: 14.5px;
+    line-height: 1.62;
+    font-weight: 400;
+  }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.custom-shadow {
+  box-shadow: 0 8px 26px rgba(36, 30, 43, 0.09);
+}
+
+.ambient-shadow {
+  box-shadow: 0 8px 26px rgba(36, 30, 43, 0.09);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

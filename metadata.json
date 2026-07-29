@@ -1,0 +1,6 @@
+{
+  "name": "Style Heaven",
+  "description": "Luxury Salon Management & Client Suite featuring Stylist Calendar, Morning Dashboard, Billing & POS, Client Profiles, Sales Reports, and Online Booking",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
