@@ -10,6 +10,7 @@ interface TopHeaderProps {
   onOpenSettings: () => void;
   onToggleNotifications: () => void;
   unreadNotificationsCount: number;
+  onOpenMobileMenu?: () => void;
 }
 
 export const TopHeader: React.FC<TopHeaderProps> = ({
@@ -21,6 +22,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   onOpenSettings,
   onToggleNotifications,
   unreadNotificationsCount,
+  onOpenMobileMenu,
 }) => {
   const managerAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuBM-XRcJcGTl7eM4nJe1yghGPe9iaDafSgbEgNjVn8unb5ACJbj_lCgi4ivgGK0iXKlejHLN7drxTLKDd8fm088qhKm6j1Ra2BkD-QPGeJ7RxbArgZdg16I8tbeV8yZB8paWB6hZpyC6sp-5c1KMYMD5UxYNYBMrWQsslME1P65jiIF9ee4wI3Lbt3d2yEnBixQpsaMrmh38Uh6uObmofTLNOLVYd3jvsSm-zPCuYm4u-wEkxuoydM";
 
@@ -28,6 +30,8 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
     switch (currentView) {
       case 'dashboard':
         return 'Morning Dashboard';
+      case 'appointments':
+        return 'Appointments Manager';
       case 'calendar':
         return 'Calendar View';
       case 'clients':
@@ -39,7 +43,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
       case 'booking':
         return 'Book at Style Heaven';
       case 'staff':
-        return 'Staff Roster & Utilization';
+        return 'Staff Roster & Performance';
       case 'inventory':
         return 'Inventory & Stock Control';
       default:
@@ -52,11 +56,12 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
       {/* Left side: View Title / Mobile Menu Button & Search */}
       <div className="flex items-center gap-4">
         <button 
-          onClick={() => onNavigate(currentView === 'dashboard' ? 'calendar' : 'dashboard')}
-          className="md:hidden text-[#5B5265] p-1.5 hover:bg-[#EFEBF2] rounded-lg"
-          title="Toggle Menu"
+          onClick={onOpenMobileMenu || (() => onNavigate('dashboard'))}
+          className="md:hidden text-[#241E2B] p-2 hover:bg-[#EFEBF2] rounded-xl flex items-center gap-1 active:scale-95 transition-all"
+          title="Open Menu"
         >
-          <span className="material-symbols-outlined">menu_open</span>
+          <span className="material-symbols-outlined text-xl text-[#B94A6E]">menu</span>
+          <span className="font-bold text-xs">Menu</span>
         </button>
 
         <div className="flex items-center gap-3">

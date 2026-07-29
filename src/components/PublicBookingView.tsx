@@ -44,7 +44,7 @@ export const PublicBookingView: React.FC<PublicBookingViewProps> = ({
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6 md:ml-64 w-[calc(100%-16rem)] max-md:ml-0 max-md:w-full transition-all">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto space-y-6 w-full transition-all">
       {/* Hero Visual Card Header */}
       <div className="relative rounded-2xl overflow-hidden h-64 md:h-72 ambient-shadow border border-[#E3DCE6]">
         <img

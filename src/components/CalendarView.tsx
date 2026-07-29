@@ -39,7 +39,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   const timeHours = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00'];
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6 md:ml-64 w-[calc(100%-16rem)] max-md:ml-0 max-md:w-full transition-all">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 w-full transition-all">
       {/* Calendar Header Area */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
         <div>
@@ -90,45 +90,47 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
         </div>
       </div>
 
-      {/* Stylist Columns Header */}
-      <div className="grid grid-cols-[80px_repeat(3,1fr)] border-b border-[#E3DCE6] bg-white/70 backdrop-blur shadow-xs rounded-t-xl overflow-hidden">
-        <div className="flex items-center justify-center p-3 border-r border-[#E3DCE6] text-[#8C8394] font-eyebrow text-[10px]">
-          TIME
-        </div>
+      {/* Calendar Grid Container with Mobile Horizontal Scroll */}
+      <div className="bg-white border border-[#E3DCE6] rounded-xl overflow-x-auto shadow-xs">
+        <div className="min-w-[640px]">
+          {/* Stylist Columns Header */}
+          <div className="grid grid-cols-[80px_repeat(3,1fr)] border-b border-[#E3DCE6] bg-white/80 backdrop-blur">
+            <div className="flex items-center justify-center p-3 border-r border-[#E3DCE6] text-[#8C8394] font-eyebrow text-[10px]">
+              TIME
+            </div>
 
-        {stylists.map((st) => (
-          <div key={st.id} className="p-3 flex items-center gap-2.5 border-r border-[#E3DCE6] last:border-r-0">
-            <div className={`w-9 h-9 rounded-full bg-[#F7EDF0] border border-[#E7C3D0] flex items-center justify-center font-bold text-xs text-[#9a3256]`}>
-              {st.avatarLetter}
-            </div>
-            <div>
-              <p className="font-ui-header text-xs text-[#241E2B]">{st.name}</p>
-              <p className="text-[10px] text-[#8C8394] uppercase font-bold">{st.title}</p>
-            </div>
+            {stylists.slice(0, 3).map((st) => (
+              <div key={st.id} className="p-3 flex items-center gap-2.5 border-r border-[#E3DCE6] last:border-r-0">
+                <div className={`w-9 h-9 rounded-full bg-[#F7EDF0] border border-[#E7C3D0] flex items-center justify-center font-bold text-xs text-[#9a3256]`}>
+                  {st.avatarLetter}
+                </div>
+                <div>
+                  <p className="font-ui-header text-xs text-[#241E2B]">{st.name}</p>
+                  <p className="text-[10px] text-[#8C8394] uppercase font-bold">{st.title}</p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Calendar View Body Grid */}
-      <div className="bg-white border-x border-b border-[#E3DCE6] rounded-b-xl overflow-hidden shadow-xs relative">
-        <div className="relative min-h-[560px]">
-          {/* Time Hour Rows */}
-          {timeHours.map((hour, idx) => (
-            <div
-              key={idx}
-              className="relative flex items-center justify-center h-[80px] text-xs font-bold text-[#8C8394] border-r border-b border-[#E3DCE6]/60 w-[80px]"
-            >
-              {hour}
+          {/* Calendar View Body Grid */}
+          <div className="relative min-h-[560px]">
+            {/* Time Hour Rows */}
+            {timeHours.map((hour, idx) => (
+              <div
+                key={idx}
+                className="relative flex items-center justify-center h-[80px] text-xs font-bold text-[#8C8394] border-r border-b border-[#E3DCE6]/60 w-[80px]"
+              >
+                {hour}
+              </div>
+            ))}
+
+            {/* Column Dividers Background */}
+            <div className="absolute inset-0 grid grid-cols-[80px_repeat(3,1fr)] pointer-events-none">
+              <div className="border-r border-[#E3DCE6]"></div>
+              <div className="border-r border-[#E3DCE6]/40"></div>
+              <div className="border-r border-[#E3DCE6]/40"></div>
+              <div></div>
             </div>
-          ))}
-
-          {/* Column Dividers Background */}
-          <div className="absolute inset-0 grid grid-cols-[80px_repeat(3,1fr)] pointer-events-none">
-            <div className="border-r border-[#E3DCE6]"></div>
-            <div className="border-r border-[#E3DCE6]/40"></div>
-            <div className="border-r border-[#E3DCE6]/40"></div>
-            <div></div>
-          </div>
 
           {/* Current Time Indicator Line (e.g. at 10:15 = 100px from top) */}
           <div className="absolute top-[100px] left-[80px] right-0 h-[2px] bg-[#B94A6E] z-20 pointer-events-none">
@@ -215,6 +217,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           })}
         </div>
       </div>
+    </div>
 
       {/* Secondary Info Section (Bento Style) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">

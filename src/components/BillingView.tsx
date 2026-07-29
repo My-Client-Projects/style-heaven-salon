@@ -102,7 +102,7 @@ export const BillingView: React.FC<BillingViewProps> = ({
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6 md:ml-64 w-[calc(100%-16rem)] max-md:ml-0 max-md:w-full transition-all">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 w-full transition-all">
       {/* Top Session Navigation Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>

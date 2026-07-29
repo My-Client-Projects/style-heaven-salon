@@ -4,11 +4,14 @@ import { INITIAL_CLIENTS, INITIAL_APPOINTMENTS, INITIAL_STYLISTS } from './data/
 import { Sidebar } from './components/Sidebar';
 import { TopHeader } from './components/TopHeader';
 import { DashboardView } from './components/DashboardView';
+import { AppointmentsView } from './components/AppointmentsView';
 import { CalendarView } from './components/CalendarView';
 import { ClientsView } from './components/ClientsView';
 import { BillingView } from './components/BillingView';
+import { StaffView } from './components/StaffView';
 import { ReportsView } from './components/ReportsView';
 import { PublicBookingView } from './components/PublicBookingView';
+import { InventoryView } from './components/InventoryView';
 import { AddAppointmentModal } from './components/AddAppointmentModal';
 import { ReceiptModal } from './components/ReceiptModal';
 import { StaffModal } from './components/StaffModal';
@@ -20,6 +23,7 @@ export default function App() {
   // Navigation State
   const [currentView, setCurrentView] = useState<ViewMode>('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Domain State
   const [clients, setClients] = useState<Client[]>(INITIAL_CLIENTS);
@@ -46,6 +50,20 @@ export default function App() {
   // Handlers
   const handleAddAppointment = (newApt: Appointment) => {
     setAppointments((prev) => [newApt, ...prev]);
+  };
+
+  const handleUpdateAppointmentStatus = (id: string, status: Appointment['status']) => {
+    setAppointments((prev) =>
+      prev.map((apt) => (apt.id === id ? { ...apt, status } : apt))
+    );
+  };
+
+  const handleSelectClientByName = (clientName: string) => {
+    const matched = clients.find((c) => c.name.toLowerCase() === clientName.toLowerCase());
+    if (matched) {
+      setActiveClient(matched);
+      setCurrentView('clients');
+    }
   };
 
   const handlePaymentComplete = (amount: number) => {
@@ -95,15 +113,19 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FFFDFC] text-[#241E2B] flex flex-col font-body selection:bg-[#E7C3D0] selection:text-[#241E2B] relative">
-      {/* Sidebar Navigation (Desktop) */}
+      {/* Sidebar Navigation */}
       <Sidebar
         currentView={currentView}
+        isOpenOnMobile={isMobileMenuOpen}
+        onCloseMobile={() => setIsMobileMenuOpen(false)}
         onNavigate={(v) => {
-          if (v === 'staff') setShowStaffModal(true);
-          else if (v === 'inventory') setShowInventoryModal(true);
-          else setCurrentView(v);
+          setCurrentView(v);
+          setIsMobileMenuOpen(false);
         }}
-        onGenerateReport={() => setCurrentView('reports')}
+        onGenerateReport={() => {
+          setCurrentView('reports');
+          setIsMobileMenuOpen(false);
+        }}
         onOpenSupport={() => alert('Style Heaven Support Concierge: Call +94 11 234 5678 or email concierge@styleheaven.lk')}
       />
 
@@ -117,10 +139,11 @@ export default function App() {
         onOpenSettings={() => setShowSettingsModal(true)}
         onToggleNotifications={() => setShowNotificationsDrawer(!showNotificationsDrawer)}
         unreadNotificationsCount={unreadNotificationsCount}
+        onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
       />
 
       {/* Main View Container */}
-      <main className="flex-1 pb-20 md:pb-8">
+      <main className="flex-1 pb-20 md:pb-8 md:ml-64 transition-all">
         {currentView === 'dashboard' && (
           <DashboardView
             onNavigate={(v) => setCurrentView(v)}
@@ -129,7 +152,18 @@ export default function App() {
             clients={clients}
             todayRevenue={todayRevenue}
             onConfirmAllBookings={() => setUnreadNotificationsCount(0)}
-            onOrderStock={() => setShowInventoryModal(true)}
+            onOrderStock={() => setCurrentView('inventory')}
+          />
+        )}
+
+        {currentView === 'appointments' && (
+          <AppointmentsView
+            appointments={appointments}
+            stylists={stylists}
+            onNavigate={(v) => setCurrentView(v)}
+            onOpenAddAppointment={() => setShowAddAppointmentModal(true)}
+            onUpdateAppointmentStatus={handleUpdateAppointmentStatus}
+            onSelectClientByName={handleSelectClientByName}
           />
         )}
 
@@ -181,10 +215,17 @@ export default function App() {
           />
         )}
 
+        {currentView === 'staff' && (
+          <StaffView
+            stylists={stylists}
+            onUpdateUtilization={handleUpdateStylistUtilization}
+          />
+        )}
+
         {currentView === 'reports' && (
           <ReportsView
             onNavigate={(v) => setCurrentView(v)}
-            onOpenInventory={() => setShowInventoryModal(true)}
+            onOpenInventory={() => setCurrentView('inventory')}
           />
         )}
 
@@ -194,6 +235,10 @@ export default function App() {
             onNavigate={(v) => setCurrentView(v)}
             onBookingConfirmed={handleOnlineBookingConfirmed}
           />
+        )}
+
+        {currentView === 'inventory' && (
+          <InventoryView />
         )}
       </main>
 
@@ -207,6 +252,16 @@ export default function App() {
         >
           <span className="material-symbols-outlined text-xl">dashboard</span>
           <span className="text-[9px]">Home</span>
+        </button>
+
+        <button
+          onClick={() => setCurrentView('appointments')}
+          className={`flex flex-col items-center gap-0.5 p-1 ${
+            currentView === 'appointments' ? 'text-[#9a3256] font-bold' : 'text-[#8C8394]'
+          }`}
+        >
+          <span className="material-symbols-outlined text-xl">format_list_bulleted</span>
+          <span className="text-[9px]">Appts</span>
         </button>
 
         <button
@@ -230,23 +285,11 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => setCurrentView('clients')}
-          className={`flex flex-col items-center gap-0.5 p-1 ${
-            currentView === 'clients' ? 'text-[#9a3256] font-bold' : 'text-[#8C8394]'
-          }`}
+          onClick={() => setIsMobileMenuOpen(true)}
+          className="flex flex-col items-center gap-0.5 p-1 text-[#8C8394] hover:text-[#241E2B]"
         >
-          <span className="material-symbols-outlined text-xl">group</span>
-          <span className="text-[9px]">Clients</span>
-        </button>
-
-        <button
-          onClick={() => setCurrentView('booking')}
-          className={`flex flex-col items-center gap-0.5 p-1 ${
-            currentView === 'booking' ? 'text-[#9a3256] font-bold' : 'text-[#8C8394]'
-          }`}
-        >
-          <span className="material-symbols-outlined text-xl">storefront</span>
-          <span className="text-[9px]">Booking</span>
+          <span className="material-symbols-outlined text-xl text-[#B94A6E]">menu</span>
+          <span className="text-[9px] font-bold">More</span>
         </button>
       </nav>
 

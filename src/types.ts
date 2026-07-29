@@ -1,11 +1,12 @@
 export type ViewMode = 
   | 'dashboard' 
+  | 'appointments' 
   | 'calendar' 
   | 'clients' 
   | 'billing' 
+  | 'staff' 
   | 'reports' 
   | 'booking' 
-  | 'staff' 
   | 'inventory';
 
 export interface Stylist {

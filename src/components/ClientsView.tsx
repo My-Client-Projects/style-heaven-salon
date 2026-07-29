@@ -22,7 +22,7 @@ export const ClientsView: React.FC<ClientsViewProps> = ({
   const [showFormulaArchive, setShowFormulaArchive] = useState(false);
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6 md:ml-64 w-[calc(100%-16rem)] max-md:ml-0 max-md:w-full transition-all">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-6 w-full transition-all">
       {/* Top Client Switcher Pills */}
       <div className="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1">
         <span className="text-xs font-bold text-[#8C8394] uppercase tracking-wider mr-2">Clients:</span>
